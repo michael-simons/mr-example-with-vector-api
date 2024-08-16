@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ac.simons</groupId>
+	<artifactId>mrexample</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<java.version>17</java.version>
+		<maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+		<maven.compiler.debug>true</maven.compiler.debug>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<forceLegacyJavacApi>true</forceLegacyJavacApi>
+					<compilerArgs>
+						<arg>-Xlint:all,-options,-path,-processing</arg>
+						<arg>-Werror</arg>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>compile-java-21</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<phase>compile</phase>
+						<configuration combine.self="override">
+							<release>21</release>
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/src/main/java21</compileSourceRoot>
+							</compileSourceRoots>
+							<multiReleaseOutput>true</multiReleaseOutput>
+							<enablePreview>true</enablePreview>
+							<compilerArgs>
+								<arg>--add-modules</arg>
+								<arg>jdk.incubator.vector</arg>
+								<arg>-Xlint:all,-options,-path,-processing</arg>
+								<arg>-parameters</arg>
+							</compilerArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>mr.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
